@@ -1,0 +1,344 @@
+<% layout('/layouts/default.html', {title: '职务信息集管理', libs: ['dataGrid']}){ %>
+<div class="main-content">
+	<div class="box box-main">
+		<div class="box-header">
+			<div class="box-title">
+				<i class="fa fa-list-alt"></i> ${text('职务信息集管理')}
+			</div>
+			<div class="box-tools pull-right">
+				<a href="#" class="btn btn-default" id="btnSearch" title="${text('查询')}"><i class="fa fa-filter"></i> ${text('查询')}</a>
+				<% if(hasPermi('rs:rsA02:edit')){ %>
+					<a href="${ctx}/rs/rsA02/form" class="btn btn-default btnTool" title="${text('新增职务信息集')}"><i class="fa fa-plus"></i> ${text('新增')}</a>
+				<% } %>
+			</div>
+		</div>
+		<div class="box-body">
+			<#form:form id="searchForm" model="${rsA02}" action="${ctx}/rs/rsA02/listData" method="post" class="form-inline hide"
+					data-page-no="${parameter.pageNo}" data-page-size="${parameter.pageSize}" data-order-by="${parameter.orderBy}">
+				<div class="form-group">
+					<label class="control-label">${text('状态')}：</label>
+					<div class="control-inline">
+						<#form:input path="sys001" maxlength="2" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任职机构')}：</label>
+					<div class="control-inline width-120" >
+						<#form:treeselect id="a0201b" title="${text('机构选择')}"
+							path="a0201b" labelPath="" 
+							url="${ctx}/sys/office/treeData" allowClear="true"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否领导成员')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="a0201d" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('成员类别')}：</label>
+					<div class="control-inline width-120">
+						<#form:select path="a0201e" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0215a" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('岗位类别')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0222" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务排序')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0223" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任职时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0243" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('选拔任用方式')}：</label>
+					<div class="control-inline">
+						<#form:input path="a02b1" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任职变动类别')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0251" maxlength="50" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('免职时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0265" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('选拔任用方式')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0247" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('免职原因类别')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0271" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务层次')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0221" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职级批准日期')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0504" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否领导职务')}：</label>
+					<div class="control-inline">
+						<#form:radio path="a0219" dictType="" blankOption="true" class="form-control"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('暂无使用')}：</label>
+					<div class="control-inline">
+						<#form:input path="a02b2" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('分管')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0229" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任职文号')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0245" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任职状态')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0255" maxlength="100" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('免职文号')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0267" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任现职务层次时间')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0288" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务输出标识')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0281" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否选中该记录')}：</label>
+					<div class="control-inline">
+						<#form:input path="ischecked" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务排序序号')}：</label>
+					<div class="control-inline">
+						<#form:input path="ordernum" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('交流标识')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0284" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('交流方式')}：</label>
+					<div class="control-inline">
+						<#form:input path="a4901" maxlength="50" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('交流原因')}：</label>
+					<div class="control-inline">
+						<#form:input path="a4904" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('交流去向')}：</label>
+					<div class="control-inline">
+						<#form:input path="a4907" maxlength="8" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0215b" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否兼任下级领导职务')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0202" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否破格提拔')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0251b" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务等级')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0221a" maxlength="20" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否公开遴选')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0291" maxlength="2" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('是否公开选调')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0292" maxlength="2" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('任职机构名称')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0201a" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('暂无使用')}：</label>
+					<div class="control-inline">
+						<#form:input path="unid" maxlength="6" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('职务变动原因综述')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0272" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('主职务')}：</label>
+					<div class="control-inline">
+						<#form:input path="a0279" maxlength="1" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label">${text('newa0201b')}：</label>
+					<div class="control-inline">
+						<#form:input path="newa0201b" maxlength="200" class="form-control width-120"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-sm">${text('查询')}</button>
+					<button type="reset" class="btn btn-default btn-sm">${text('重置')}</button>
+				</div>
+			</#form:form>
+			<table id="dataGrid"></table>
+			<div id="dataGridPage"></div>
+		</div>
+	</div>
+</div>
+<% } %>
+<script>
+// 初始化DataGrid对象
+$('#dataGrid').dataGrid({
+	searchForm: $("#searchForm"),
+	columnModel: [
+		{header:'${text("状态")}', name:'sys001', index:'a.sys001', width:150, align:"left", frozen:true, formatter: function(val, obj, row, act){
+			return '<a href="${ctx}/rs/rsA02/form?id='+row.id+'" class="btnList" data-title="${text("编辑职务信息集")}">'+(val||row.id)+'</a>';
+		}},
+		{header:'${text("任职机构")}', name:'', index:'a.a0201b', width:150, align:"center"},
+		{header:'${text("是否领导成员")}', name:'a0201d', index:'a.a0201d', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("成员类别")}', name:'a0201e', index:'a.a0201e', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("职务名称")}', name:'a0215a', index:'a.a0215a', width:150, align:"left"},
+		{header:'${text("岗位类别")}', name:'a0222', index:'a.a0222', width:150, align:"left"},
+		{header:'${text("职务排序")}', name:'a0223', index:'a.a0223', width:150, align:"left"},
+		{header:'${text("任职时间")}', name:'a0243', index:'a.a0243', width:150, align:"left"},
+		{header:'${text("选拔任用方式")}', name:'a02b1', index:'a.a02b1', width:150, align:"left"},
+		{header:'${text("任职变动类别")}', name:'a0251', index:'a.a0251', width:150, align:"left"},
+		{header:'${text("免职时间")}', name:'a0265', index:'a.a0265', width:150, align:"left"},
+		{header:'${text("选拔任用方式")}', name:'a0247', index:'a.a0247', width:150, align:"left"},
+		{header:'${text("免职原因类别")}', name:'a0271', index:'a.a0271', width:150, align:"left"},
+		{header:'${text("职务层次")}', name:'a0221', index:'a.a0221', width:150, align:"left"},
+		{header:'${text("职级批准日期")}', name:'a0504', index:'a.a0504', width:150, align:"left"},
+		{header:'${text("是否领导职务")}', name:'a0219', index:'a.a0219', width:150, align:"center", formatter: function(val, obj, row, act){
+			return js.getDictLabel(${@DictUtils.getDictListJson('')}, val, '${text("未知")}', true);
+		}},
+		{header:'${text("暂无使用")}', name:'a02b2', index:'a.a02b2', width:150, align:"left"},
+		{header:'${text("分管")}', name:'a0229', index:'a.a0229', width:150, align:"left"},
+		{header:'${text("任职文号")}', name:'a0245', index:'a.a0245', width:150, align:"left"},
+		{header:'${text("任职状态")}', name:'a0255', index:'a.a0255', width:150, align:"left"},
+		{header:'${text("免职文号")}', name:'a0267', index:'a.a0267', width:150, align:"left"},
+		{header:'${text("任现职务层次时间")}', name:'a0288', index:'a.a0288', width:150, align:"left"},
+		{header:'${text("职务输出标识")}', name:'a0281', index:'a.a0281', width:150, align:"left"},
+		{header:'${text("是否选中该记录")}', name:'ischecked', index:'a.ischecked', width:150, align:"left"},
+		{header:'${text("职务排序序号")}', name:'ordernum', index:'a.ordernum', width:150, align:"center"},
+		{header:'${text("交流标识")}', name:'a0284', index:'a.a0284', width:150, align:"left"},
+		{header:'${text("交流方式")}', name:'a4901', index:'a.a4901', width:150, align:"left"},
+		{header:'${text("交流原因")}', name:'a4904', index:'a.a4904', width:150, align:"left"},
+		{header:'${text("交流去向")}', name:'a4907', index:'a.a4907', width:150, align:"left"},
+		{header:'${text("职务名称")}', name:'a0215b', index:'a.a0215b', width:150, align:"left"},
+		{header:'${text("是否兼任下级领导职务")}', name:'a0202', index:'a.a0202', width:150, align:"left"},
+		{header:'${text("是否破格提拔")}', name:'a0251b', index:'a.a0251b', width:150, align:"left"},
+		{header:'${text("职务等级")}', name:'a0221a', index:'a.a0221a', width:150, align:"left"},
+		{header:'${text("是否公开遴选")}', name:'a0291', index:'a.a0291', width:150, align:"left"},
+		{header:'${text("是否公开选调")}', name:'a0292', index:'a.a0292', width:150, align:"left"},
+		{header:'${text("任职机构名称")}', name:'a0201a', index:'a.a0201a', width:150, align:"left"},
+		{header:'${text("暂无使用")}', name:'unid', index:'a.unid', width:150, align:"left"},
+		{header:'${text("职务变动原因综述")}', name:'a0272', index:'a.a0272', width:150, align:"left"},
+		{header:'${text("主职务")}', name:'a0279', index:'a.a0279', width:150, align:"left"},
+		{header:'${text("newa0201b")}', name:'newa0201b', index:'a.newa0201b', width:150, align:"left"},
+		{header:'${text("操作")}', name:'actions', width:120, sortable:false, title:false, formatter: function(val, obj, row, act){
+			var actions = [];
+			<% if(hasPermi('rs:rsA02:edit')){ %>
+				actions.push('<a href="${ctx}/rs/rsA02/form?id='+row.id+'" class="btnList" title="${text("编辑职务信息集")}"><i class="fa fa-pencil"></i></a>&nbsp;');
+				if (row.status == Global.STATUS_NORMAL){
+					actions.push('<a href="${ctx}/rs/rsA02/disable?id='+row.id+'" class="btnList" title="${text("停用职务信息集")}" data-confirm="${text("确认要停用该职务信息集吗？")}"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+				}
+				if (row.status == Global.STATUS_DISABLE){
+					actions.push('<a href="${ctx}/rs/rsA02/enable?id='+row.id+'" class="btnList" title="${text("启用职务信息集")}" data-confirm="${text("确认要启用该职务信息集吗？")}"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+				}
+				actions.push('<a href="${ctx}/rs/rsA02/delete?id='+row.id+'" class="btnList" title="${text("删除职务信息集")}" data-confirm="${text("确认要删除该职务信息集吗？")}"><i class="fa fa-trash-o"></i></a>&nbsp;');
+			<% } %>
+			return actions.join('');
+		}}
+	],
+	// 加载成功后执行事件
+	ajaxSuccess: function(data){
+		
+	}
+});
+</script>
